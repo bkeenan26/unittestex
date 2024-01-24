@@ -63,7 +63,7 @@ public class PetStoreTest
 
     @Test
     @DisplayName("Poodle Duplicate Record Exception Test")
-    public void poodleDupRecordExceptionTest() throws DuplicatePetStoreRecordException, PetNotFoundSaleException {
+    public void poodleDupRecordExceptionTest() {
         petStore.addPetInventoryItem(new Dog(AnimalType.DOMESTIC, Skin.FUR, Gender.MALE, Breed.POODLE,
                 new BigDecimal("650.00"), 1));
         Dog poodle = new Dog(AnimalType.DOMESTIC, Skin.FUR, Gender.MALE, Breed.POODLE,
@@ -93,9 +93,9 @@ public class PetStoreTest
 
     /**
      * Limitations to test factory as it does not instantiate before all
-     * @return
-     * @throws DuplicatePetStoreRecordException
-     * @throws PetNotFoundSaleException
+     * @return list of {@link DynamicNode} that contains the test results
+     * @throws DuplicatePetStoreRecordException if duplicate pet record is found
+     * @throws PetNotFoundSaleException if pet is not found
      */
     @TestFactory
     @DisplayName("Sale of Sphynx Remove Item Test2")
@@ -121,7 +121,7 @@ public class PetStoreTest
 
     /**
      * Example of parameterized test
-     * @param number
+     * @param number to be tested
      */
     @ParameterizedTest
     @ValueSource(ints = {2, 4, 6, -10, 128, Integer.MIN_VALUE}) // six numbers
