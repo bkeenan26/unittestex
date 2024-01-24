@@ -15,8 +15,8 @@ public abstract class  AbstractPet {
     protected Skin skinType = Skin.UNKNOWN;
     protected Gender gender = Gender.UNKNOWN;
 
-    boolean hasLegs = true;
-    boolean isMammal = false;
+    protected boolean hasLegs = true;
+    protected boolean isMammal = false;
 
     /**
      * Get the pet's gender
@@ -26,7 +26,7 @@ public abstract class  AbstractPet {
 
     /**
      * Is the pet allergy friendly determined by skin type
-     * @param skin
+     * @param skin type of skin the pet has
      * @return A message that tells if the pet is hypoallergenic
      */
     public String petHypoallergenic(Skin skin)

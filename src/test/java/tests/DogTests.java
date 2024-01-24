@@ -44,6 +44,7 @@ public class DogTests {
         assertEquals("The dog is not hyperallergetic!", actualDog.dogHypoallergenic(),
                 "The dog is not hyperallergetic!");
     }
+
     @Test
     @Order(1)
     @DisplayName("Dog has legs Test")
@@ -68,6 +69,7 @@ public class DogTests {
         actualDog = new Dog(AnimalType.WILD, Skin.UNKNOWN,Gender.FEMALE, Breed.MALTESE);
         assertEquals(Breed.MALTESE, actualDog.getBreed(), "Expecting Breed Maltese!");
     }
+
     @Test
     @Order(2)
     @DisplayName("Dog Speak Grr Tests")
@@ -76,6 +78,7 @@ public class DogTests {
         actualDog = new Dog(AnimalType.WILD, Skin.UNKNOWN,Gender.UNKNOWN, Breed.UNKNOWN);
         assertEquals("The dog goes Grr! Grr!", actualDog.speak(), "I was expecting Grr");
     }
+
     @Test
     @Order(2)
     @DisplayName("Dog Speak Bark Tests 1")
@@ -84,9 +87,4 @@ public class DogTests {
         actualDog = new Dog(AnimalType.UNKNOWN, Skin.UNKNOWN,Gender.UNKNOWN, Breed.UNKNOWN);
         assertEquals("The dog goes Bark! Bark!", actualDog.speak(), "I was expecting Bark");
     }
-
-
-
-
-
 }

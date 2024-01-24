@@ -1,6 +1,7 @@
 package tests;
 
 import animals.AnimalType;
+import animals.petstore.pet.Pet;
 import animals.petstore.pet.attributes.Breed;
 import animals.petstore.pet.attributes.Gender;
 import animals.petstore.pet.attributes.Skin;
@@ -20,7 +21,7 @@ import static org.hamcrest.Matchers.*;
  * Provide a hamcrest asserts example
  */
 public class HamcrestExampleTest {
-    private List dListActual = Arrays.asList(
+    private List<Pet> dListActual = Arrays.asList(
             new Dog(AnimalType.DOMESTIC, Skin.FUR, Gender.MALE, Breed.MALTESE,
                     new BigDecimal("750.00"), 1),
             new Dog(AnimalType.DOMESTIC, Skin.FUR, Gender.MALE, Breed.POODLE,
@@ -28,7 +29,7 @@ public class HamcrestExampleTest {
             new Dog(AnimalType.DOMESTIC, Skin.HAIR, Gender.FEMALE, Breed.GERMAN_SHEPARD,
                     new BigDecimal("750.00"), 2));
 
-    private List dListExpected = Arrays.asList(
+    private List<Pet> dListExpected = Arrays.asList(
             new Dog(AnimalType.DOMESTIC, Skin.FUR, Gender.MALE, Breed.MALTESE,
                     new BigDecimal("750.00"), 1),
             new Dog(AnimalType.DOMESTIC, Skin.FUR, Gender.MALE, Breed.POODLE,

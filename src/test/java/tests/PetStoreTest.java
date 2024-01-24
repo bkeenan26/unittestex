@@ -107,7 +107,7 @@ public class PetStoreTest
         Cat removedItem = (Cat) petStore.soldPetItem(sphynx);
 
         // Validation
-        List<DynamicNode> nodes = new ArrayList<DynamicNode>();
+        List<DynamicNode> nodes = new ArrayList<>();
         List<DynamicTest> dynamicTests = Arrays.asList(
                 dynamicTest("Inventory Check Size Test ", () -> assertEquals(inventorySize,
                         petStore.getPetsForSale().size())),

@@ -12,5 +12,5 @@ public interface PetImpl {
      * Get the pet breed type
      * @return {@link Breed}
      */
-    public Breed getBreed();
+    Breed getBreed();
 }

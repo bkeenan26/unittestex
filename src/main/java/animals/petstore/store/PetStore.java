@@ -24,8 +24,8 @@ public class PetStore
 
     public PetStore()
     {
-        petsForSale = new ArrayList<Pet>();
-        petsSold = new ArrayList<Pet>();
+        petsForSale = new ArrayList<>();
+        petsSold = new ArrayList<>();
 
     }
 
@@ -96,10 +96,10 @@ public class PetStore
 
     /**
      * Remove the Pet from the pet store by id and type of pet
-     * @param petType
-     * @param petId
+     * @param petType the type of pet
+     * @param petStoreId the pet store id
      */
-    private void removePetFromInventoryByPetId(PetType petType, int petId)
+    private void removePetFromInventoryByPetId(PetType petType, int petStoreId)
     {
         List<Pet> otherPets = this.petsForSale.stream()
                 .filter(p -> (p.getPetType() != petType))
@@ -109,13 +109,13 @@ public class PetStore
             case CAT:
                 this.petsForSale = this.petsForSale.stream()
                         .filter(p -> ((p instanceof Cat)
-                                && (p.getPetStoreId() != petId)))
+                                && (p.getPetStoreId() != petStoreId)))
                         .collect(Collectors.toList());
                 break;
             default: //remove the dog
                 this.petsForSale = this.petsForSale.stream()
                         .filter(p -> ((p instanceof Dog)
-                                && (p.getPetStoreId() != petId)))
+                                && (p.getPetStoreId() != petStoreId)))
                         .collect(Collectors.toList());
 
                 break;
