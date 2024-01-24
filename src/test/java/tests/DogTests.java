@@ -41,7 +41,7 @@ public class DogTests {
     @DisplayName("Dog Fur is it Hyperallergetic")
     public void dogHyperAllergeticTests()
     {
-        assertEquals("The dog is not hyperallergetic!", actualDog.dogHyperAllergetic(),
+        assertEquals("The dog is not hyperallergetic!", actualDog.dogHypoallergenic(),
                 "The dog is not hyperallergetic!");
     }
     @Test

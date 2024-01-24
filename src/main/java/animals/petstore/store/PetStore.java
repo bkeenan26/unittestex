@@ -22,7 +22,6 @@ public class PetStore
 
     private List<Pet> petsSold;
 
-    private int petStoreId;
     public PetStore()
     {
         petsForSale = new ArrayList<Pet>();
@@ -64,22 +63,22 @@ public class PetStore
 
     /**
      * Remove pet items from the petsForSale list
-     * @param soldPet
-     * @return
-     * @throws DuplicatePetStoreRecordException
-     * @throws PetNotFoundSaleException
+     * @param soldPet the type of {@link Pet} that will be sold
+     * @return {@link Pet} that was sold
+     * @throws DuplicatePetStoreRecordException if the pet store record is duplicated
+     * @throws PetNotFoundSaleException if the pet is not in any store
      */
     public Pet soldPetItem(Pet soldPet) throws DuplicatePetStoreRecordException, PetNotFoundSaleException {
-        if(soldPet.getPetStoreId()==0)
+        if (soldPet.getPetStoreId()==0)
         {
             throw new PetNotFoundSaleException("The Pet is not part of the pet store!!");
         }
-        if(soldPet instanceof Dog)
+        else if (soldPet instanceof Dog)
         {
             Dog foundDog = this.identifySoldDogFromInventory((Dog) soldPet);
             this.removePetFromInventoryByPetId(PetType.DOG, soldPet.getPetStoreId());
             return foundDog;
-        }else {
+        } else {
             Cat foundCat = this.identifySoldCatFromInventory((Cat) soldPet);
             this.removePetFromInventoryByPetId(PetType.CAT, soldPet.getPetStoreId());
             return foundCat;
@@ -88,11 +87,11 @@ public class PetStore
 
     /**
      * Add item to the inventory list
-     * @param item
+     * @param pet {@link Pet} to be added to the inventory
      */
-    public void addPetInventoryItem(Pet item)
+    public void addPetInventoryItem(Pet pet)
     {
-        this.petsForSale.add(item);
+        this.petsForSale.add(pet);
     }
 
     /**
@@ -126,9 +125,9 @@ public class PetStore
 
     /**
      * Identify the Dog to remove from the inventory list
-     * @param soldDog
-     * @return
-     * @throws DuplicatePetStoreRecordException
+     * @param soldDog the {@link Dog} that will be sold
+     * @return the {@link Dog} that was sold
+     * @throws DuplicatePetStoreRecordException if there is duplicate dog record
      */
     private Dog identifySoldDogFromInventory(Dog soldDog) throws DuplicatePetStoreRecordException
     {
@@ -137,20 +136,24 @@ public class PetStore
                         && (p.getPetStoreId() == soldDog.getPetStoreId())))
                 .collect(Collectors.toList());
 
-        if(dogPets.isEmpty())
+        if (dogPets.isEmpty())
         {
             return null;
         }
-        if(dogPets.size()==1)
+        else if (dogPets.size()==1)
         {
             return (Dog) dogPets.get(0);
         }
         else {
-            throw new DuplicatePetStoreRecordException ("Duplicate Dog record id[" + soldDog.getPetStoreId() + "]");
+            throw new DuplicatePetStoreRecordException ("Duplicate Dog record store id [" + soldDog.getPetStoreId() + "]");
         }
     }
+
     /**
      * Identify the cat which was sold from the inventory list
+     * @param soldCat the {@link Cat} that will be sold
+     * @return the {@link Cat} that was sold
+     * @throws DuplicatePetStoreRecordException if there is duplicate cat record
      */
     private Cat identifySoldCatFromInventory(Cat soldCat) throws DuplicatePetStoreRecordException
     {
@@ -159,18 +162,19 @@ public class PetStore
                         && (p.getPetStoreId() == soldCat.getPetStoreId())))
                 .collect(Collectors.toList());
 
-        if(catPets.isEmpty())
+        if (catPets.isEmpty())
         {
             return null;
         }
-        if(catPets.size()==1)
+        else if (catPets.size()==1)
         {
             return (Cat) catPets.get(0);
         }
         else {
-            throw new DuplicatePetStoreRecordException ("Duplicate Cat record id[" + soldCat.getPetStoreId() + "]");
+            throw new DuplicatePetStoreRecordException ("Duplicate Cat record store id [" + soldCat.getPetStoreId() + "]");
         }
     }
+
     public List<Pet> getPetsForSale()
     {
         return petsForSale;

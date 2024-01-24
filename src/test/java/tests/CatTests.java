@@ -40,7 +40,7 @@ public class CatTests{
         @DisplayName("Cat Fur is it Hyperallergetic")
         public void catHyperAllergeticTests()
         {
-            assertEquals("The cat is not hyperallergetic!", actualCat.catHyperAllergetic(),
+            assertEquals("The cat is not hyperallergetic!", actualCat.catHypoallergenic(),
                     "The cat is not hyperallergetic!");
         }
         @Test

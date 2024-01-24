@@ -9,43 +9,45 @@ import animals.petstore.pet.attributes.Skin;
  * Common attributes of a pet
  */
 public abstract class  AbstractPet {
-    public AbstractPet()
-    {
 
-    }
-    private AnimalType animalType = AnimalType.UNKNOWN;
-    private PetType petType = PetType.UNKNOWN;
-    private static Skin skinType = Skin.UNKNOWN;
-    private Gender gender = Gender.UNKNOWN;
+    protected AnimalType animalType = AnimalType.UNKNOWN;
+    protected PetType petType = PetType.UNKNOWN;
+    protected Skin skinType = Skin.UNKNOWN;
+    protected Gender gender = Gender.UNKNOWN;
 
     boolean hasLegs = true;
     boolean isMammal = false;
+
+    /**
+     * Get the pet's gender
+     * @return {@link Gender}
+     */
     public abstract Gender getGender();
 
     /**
      * Is the pet allergy friendly determined by skin type
      * @param skin
-     * @return
+     * @return A message that tells if the pet is hypoallergenic
      */
-    public String isPetHyperAllergetic(Skin skin)
+    public String petHypoallergenic(Skin skin)
     {
-        String isPetHyperAllergeticStmt;
+        String petHypoallergenicStmt;
         switch(skin)
         {
             case FUR:
             case FEATHERS:
-                isPetHyperAllergeticStmt = "The pet is not hyperallergetic!";
+                petHypoallergenicStmt = "The pet is not hyperallergetic!";
                 break;
             case HAIR:
             case SCALES:
-                isPetHyperAllergeticStmt = "The pet is hyperallergetic!";
+                petHypoallergenicStmt = "The pet is hyperallergetic!";
                 break;
             default:
-                isPetHyperAllergeticStmt = "The pet skin is UNKNOWN at this time, so cannot determine if pet is " +
+                petHypoallergenicStmt = "The pet skin is UNKNOWN at this time, so cannot determine if pet is " +
                         "hypoallergetic!";
                 break;
         }
-        return isPetHyperAllergeticStmt;
+        return petHypoallergenicStmt;
     }
 
 

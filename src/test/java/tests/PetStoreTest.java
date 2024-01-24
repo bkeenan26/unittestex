@@ -27,6 +27,7 @@ import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 public class PetStoreTest
 {
     private static PetStore petStore;
+
     @BeforeEach
     public void loadThePetStoreInventory()
     {
@@ -40,22 +41,26 @@ public class PetStoreTest
     {
         assertEquals(5, petStore.getPetsForSale().size(),"Inventory counts are off!");
     }
+
     @Test
     @DisplayName("Print Inventory Test")
     public void printInventoryTest()
     {
         petStore.printInventory();
     }
+
     @Test
     @DisplayName("Sale of Poodle Remove Item Test")
     public void poodleSoldTest() throws DuplicatePetStoreRecordException, PetNotFoundSaleException {
         int inventorySize = petStore.getPetsForSale().size() - 1;
         Dog poodle = new Dog(AnimalType.DOMESTIC, Skin.FUR, Gender.MALE, Breed.POODLE,
                 new BigDecimal("650.00"), 1);
+
+        // Validation
         petStore.soldPetItem(poodle);
         assertEquals(inventorySize, petStore.getPetsForSale().size(), "Expected inventory does not match actual");
-
     }
+
     @Test
     @DisplayName("Poodle Duplicate Record Exception Test")
     public void poodleDupRecordExceptionTest() throws DuplicatePetStoreRecordException, PetNotFoundSaleException {
@@ -63,7 +68,9 @@ public class PetStoreTest
                 new BigDecimal("650.00"), 1));
         Dog poodle = new Dog(AnimalType.DOMESTIC, Skin.FUR, Gender.MALE, Breed.POODLE,
                 new BigDecimal("650.00"), 1);
-        String expectedMessage = "Duplicate Dog record id[1]";
+
+        // Validation
+        String expectedMessage = "Duplicate Dog record store id [1]";
         Exception exception = assertThrows(DuplicatePetStoreRecordException.class, () ->{
             petStore.soldPetItem(poodle);});
         assertEquals(expectedMessage, exception.getMessage(), "DuplicateRecordExceptionTest was NOT encountered!");
@@ -74,9 +81,12 @@ public class PetStoreTest
     @DisplayName("Sale of Sphynx Remove Item Test")
     public void sphynxSoldTest() throws DuplicatePetStoreRecordException, PetNotFoundSaleException {
         int inventorySize = petStore.getPetsForSale().size() - 1;
+
         Cat sphynx = new Cat(AnimalType.DOMESTIC, Skin.UNKNOWN, Gender.FEMALE, Breed.SPHYNX,
                 new BigDecimal("100.00"),2);
         Cat removedItem = (Cat) petStore.soldPetItem(sphynx);
+
+        // Validation
         assertEquals(inventorySize, petStore.getPetsForSale().size(), "Expected inventory does not match actual");
         assertEquals(sphynx.getPetStoreId(), removedItem.getPetStoreId(), "The cat items are identical");
     }
@@ -91,9 +101,12 @@ public class PetStoreTest
     @DisplayName("Sale of Sphynx Remove Item Test2")
     public Stream<DynamicNode> sphynxSoldTest2() throws DuplicatePetStoreRecordException, PetNotFoundSaleException {
         int inventorySize = petStore.getPetsForSale().size() - 1;
+
         Cat sphynx = new Cat(AnimalType.DOMESTIC, Skin.UNKNOWN, Gender.FEMALE, Breed.SPHYNX,
                 new BigDecimal("100.00"),2);
         Cat removedItem = (Cat) petStore.soldPetItem(sphynx);
+
+        // Validation
         List<DynamicNode> nodes = new ArrayList<DynamicNode>();
         List<DynamicTest> dynamicTests = Arrays.asList(
                 dynamicTest("Inventory Check Size Test ", () -> assertEquals(inventorySize,
@@ -102,6 +115,7 @@ public class PetStoreTest
                         removedItem.toString()))
                 );
         nodes.add(dynamicContainer("Cat Item 2 Test", dynamicTests));//dynamicNode("", dynamicContainers);
+
         return nodes.stream();
     }
 

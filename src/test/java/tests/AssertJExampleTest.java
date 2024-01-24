@@ -35,6 +35,7 @@ public class AssertJExampleTest
             new Dog(AnimalType.DOMESTIC, Skin.HAIR, Gender.FEMALE, Breed.CARDINAL,
                     new BigDecimal("750.00"), 2)
     );
+
     @Test
     @DisplayName("ABC test")
     public void abcTest()
@@ -42,6 +43,7 @@ public class AssertJExampleTest
         assertThat("abc").isEqualTo(123);
 
     }
+
     @Test
     @DisplayName("Empty String test")
     public void emptyStringTest()
@@ -49,6 +51,7 @@ public class AssertJExampleTest
         assertThat("".isEmpty()).isTrue();
 
     }
+
     @Test
     @DisplayName("Collection Test not null and not empty")
     public void dogCollectionTest()

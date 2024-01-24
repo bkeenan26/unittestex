@@ -1,6 +1,7 @@
 package animals.petstore.pet.types;
 
 import animals.AnimalType;
+import animals.petstore.pet.Pet;
 import animals.petstore.pet.attributes.Breed;
 import animals.petstore.pet.attributes.Gender;
 import animals.petstore.pet.attributes.PetType;
@@ -10,50 +11,67 @@ import java.math.BigDecimal;
 
 /**
  * Cat attributes
- * @param <Pet>
  */
-public class Cat<Pet> extends animals.petstore.pet.Pet implements PetImpl {
+public class Cat extends Pet implements PetImpl {
 
+    /* Properties */
+    private int numberOfLegs;
+    private Breed breed;
+
+    /**
+     * Constructor
+     * @param animalType {@link AnimalType} that defines if it domesticated or wild cat
+     * @param skinType The {@link Skin} of the cat
+     * @param gender The {@link Gender} of the cat
+     * @param breed The type of cat {@link Breed}
+     */
     public Cat(AnimalType animalType, Skin skinType, Gender gender, Breed breed)
     {
-        super(PetType.CAT, new BigDecimal(0), gender);
-        this.skinType = skinType;
-        this.numberOfLegs = 4;
-        this.animalType = animalType;
-        this.breed = breed;
+        this(animalType, skinType, gender, breed, new BigDecimal(0));
     }
+
+    /**
+     * Constructor
+     * @param animalType {@link AnimalType} that defines if it domesticated or wild cat
+     * @param skinType The {@link Skin} of the cat
+     * @param gender The {@link Gender} of the cat
+     * @param breed The type of cat {@link Breed}
+     * @param cost The cost of the cat
+     */
     public Cat(AnimalType animalType, Skin skinType, Gender gender, Breed breed, BigDecimal cost)
     {
-        super(PetType.CAT, cost, gender);
-        this.skinType = skinType;
-        this.numberOfLegs = 4;
-        this.animalType = animalType;
-        this.breed = breed;
+        this(animalType, skinType, gender, breed, cost, 0);
     }
+
+    /**
+     * Constructor
+     * @param animalType {@link AnimalType} that defines if it domesticated or wild cat
+     * @param skinType The {@link Skin} of the cat
+     * @param gender The {@link Gender} of the cat
+     * @param breed The type of cat {@link Breed}
+     * @param cost The cost of the cat
+     * @param petStoreId The pet store id
+     */
     public Cat(AnimalType animalType, Skin skinType, Gender gender, Breed breed, BigDecimal cost, int petStoreId)
     {
         super(PetType.CAT, cost, gender, petStoreId);
-        this.skinType = skinType;
+        super.skinType = skinType;
+        super.animalType = animalType;
         this.numberOfLegs = 4;
-        this.animalType = animalType;
         this.breed = breed;
     }
-    private int numberOfLegs;
-    private PetType type;
-    private AnimalType animalType;
-    // private Skin skinType;
 
-    private Breed breed;
-
-    private Skin skinType;
-
-    public String catHyperAllergetic() {
-        return super.isPetHyperAllergetic(this.skinType).replaceAll("pet", "cat");
+    /**
+     * Is the cat allergy friendly determined by skin type
+     * @return A message that tells if the cat is hypoallergenic
+     */
+    public String catHypoallergenic() {
+        return super.petHypoallergenic(this.skinType).replaceAll("pet", "cat");
     }
 
     /**
      * Depending if the cat is domestic, wild, or neither what can the say
-     * @return
+     * @return what cats would speak
      */
     public String speak() {
         String language;
@@ -83,24 +101,28 @@ public class Cat<Pet> extends animals.petstore.pet.Pet implements PetImpl {
         this.numberOfLegs = numberOfLegs;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Breed getBreed() {
         return this.breed;
     }
 
     public String typeOfPet() {
-        return "The type of pet is " + type + "!";
+        return "The type of pet is " + petType + "!";
     }
 
     public AnimalType getAnimalType() {
-        return this.animalType;
+        return super.animalType;
     }
+
     @Override
     public String toString() {
         return super.toString() +
                 "The cat is " + this.animalType + "!\n" +
                 "The cat breed is " + this.getBreed() + "!\n" +
-                this.catHyperAllergetic() + "!\n" +
+                this.catHypoallergenic() + "!\n" +
                 this.speak() + "\n" +
                 this.numberOfLegs();
     }

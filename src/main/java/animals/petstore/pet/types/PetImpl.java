@@ -7,5 +7,10 @@ import animals.petstore.pet.attributes.Breed;
  */
 public interface PetImpl {
     Breed breed = Breed.UNKNOWN;
+
+    /**
+     * Get the pet breed type
+     * @return {@link Breed}
+     */
     public Breed getBreed();
 }

@@ -36,6 +36,7 @@ public class HamcrestExampleTest {
             new Dog(AnimalType.DOMESTIC, Skin.HAIR, Gender.FEMALE, Breed.CARDINAL,
                     new BigDecimal("750.00"), 2)
     );
+
     @Test
     @DisplayName("ABC test")
     public void abcTest()
@@ -51,6 +52,7 @@ public class HamcrestExampleTest {
         assertThat("",is(nullValue()));
 
     }
+
     @Test
     @DisplayName("Collection Test not empty")
     public void dogCollectionNotEmptyTest()
@@ -58,12 +60,14 @@ public class HamcrestExampleTest {
         assertThat(dListActual.isEmpty(), is(false));
 
     }
+
     @Test
     @DisplayName("Collection Test not null")
     public void dogCollectionNotEmptyNotNull()
     {
         assertThat(dListActual, is(nullValue()));
     }
+
     @Test
     @DisplayName("Dog Collection  Match Tests1")
     public void dogCollectionMatch()
