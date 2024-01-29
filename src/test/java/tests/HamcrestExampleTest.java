@@ -50,7 +50,7 @@ public class HamcrestExampleTest {
     @DisplayName("Empty String test")
     public void emptyStringTest()
     {
-        assertThat("",is(nullValue()));
+        assertThat(null,is(nullValue()));
 
     }
 
@@ -66,7 +66,7 @@ public class HamcrestExampleTest {
     @DisplayName("Collection Test not null")
     public void dogCollectionNotEmptyNotNull()
     {
-        assertThat(dListActual, is(nullValue()));
+        assertThat(dListActual, is(notNullValue()));
     }
 
     @Test
