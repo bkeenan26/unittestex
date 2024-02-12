@@ -33,7 +33,7 @@ public class DogTests {
     @DisplayName("Dog Speak Woof Tests")
     public void dogGoesWoffTest()
     {
-        assertEquals("The dog goes woof! woof!", actualDog.speak(), "I was expecting wuff");
+        assertEquals("The dog goes woof! woof!", actualDog.speak(), "I was expecting woof! woof!");
     }
 
     @Test
