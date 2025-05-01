@@ -7,6 +7,7 @@
     <groupId>org.example</groupId>
     <artifactId>junitsimple</artifactId>
     <version>1.0-SNAPSHOT</version>
+
     <dependencies>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -37,5 +38,28 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.8</version>
+                <executions>
+                    <execution>
+                        <id>default-prepare-agent</id> <!-- This should be unique -->
+                        <goals>
+                            <goal>prepare-agent</goal> <!-- This adds JaCoCo agent to tests -->
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>default-report</id> <!-- This should be unique -->
+                        <goals>
+                            <goal>report</goal> <!-- This generates the JaCoCo report -->
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
