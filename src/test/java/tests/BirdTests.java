@@ -19,8 +19,7 @@ public class BirdTests {
     private static Bird actualBird;
 
     @BeforeAll
-    public static void createAnimals()
-    {
+    public static void createAnimals() {
         actualBird = new Bird(AnimalType.DOMESTIC, Skin.FEATHERS, Gender.MALE, Breed.CARDINAL,
             new BigDecimal("200.0"), 4);
     }
@@ -28,8 +27,7 @@ public class BirdTests {
     @Test
     @Order(1)
     @DisplayName("Test Bird Constructor 1")
-    public void testBirdConstructorOne()
-    {
+    public void testBirdConstructorOne() {
         // Arrange
         AnimalType type = AnimalType.DOMESTIC;
         Skin skin = Skin.FEATHERS;
@@ -49,8 +47,7 @@ public class BirdTests {
     @Test
     @Order(1)
     @DisplayName("Test Bird Constructor 2")
-    public void testBirdConstructorTwo()
-    {
+    public void testBirdConstructorTwo() {
         // Arrange
         AnimalType type = AnimalType.DOMESTIC;
         Skin skin = Skin.FEATHERS;
@@ -73,8 +70,7 @@ public class BirdTests {
     @Test
     @Order(1)
     @DisplayName("Animal Test Type Tests Domestic")
-    public void animalTypeTests()
-    {
+    public void animalTypeTests() {
         // Arrange, Act, Assert
         assertEquals(AnimalType.DOMESTIC, actualBird.getAnimalType(), "Animal Type Expected[" + AnimalType.DOMESTIC
                 + "] Actual[" + actualBird.getAnimalType() + "]");
@@ -83,8 +79,7 @@ public class BirdTests {
     @Test
     @Order(1)
     @DisplayName("Bird Test is it Hyperallergetic")
-    public void birdHyperAllergeticTests()
-    {
+    public void birdHyperAllergeticTests() {
         // Arrange, Act, Assert
         assertEquals("The bird is not hyperallergetic!", actualBird.birdHypoallergenic(),
                 "The bird is not hyperallergetic!");
@@ -93,8 +88,7 @@ public class BirdTests {
     @Test
     @Order(1)
     @DisplayName("Bird has legs Test")
-    public void legTests()
-    {
+    public void legTests() {
         // Arrange, Act, Assert
         Assertions.assertNotNull(actualBird.getNumberOfLegs());
     }
@@ -102,8 +96,7 @@ public class BirdTests {
     @Test
     @Order(2)
     @DisplayName("Bird Gender Test Female")
-    public void genderTestFeMale()
-    {
+    public void genderTestFeMale() {
         // Arrange, Act, Assert
         actualBird = new Bird(AnimalType.DOMESTIC, Skin.FEATHERS, Gender.MALE, Breed.CARDINAL,
                 new BigDecimal("200.0"), 4);
@@ -112,8 +105,7 @@ public class BirdTests {
     @Test
     @Order(2)
     @DisplayName("Bird Breed Test Cardinal")
-    public void genderCatBreed()
-    {
+    public void genderCatBreed() {
         // Arrange, Act, Assert
         actualBird = new Bird(AnimalType.DOMESTIC, Skin.FEATHERS, Gender.MALE, Breed.CARDINAL,
                 new BigDecimal("200.0"), 4);
@@ -122,8 +114,7 @@ public class BirdTests {
     @Test
     @Order(2)
     @DisplayName("Bird Domestic Speak Test")
-    public void birdDomesticSpeakTest()
-    {
+    public void birdDomesticSpeakTest() {
         // Arrange & Act
         actualBird = new Bird(AnimalType.DOMESTIC, Skin.FEATHERS, Gender.MALE, Breed.CARDINAL,
                 new BigDecimal("200.0"), 4);
@@ -135,8 +126,7 @@ public class BirdTests {
     @Test
     @Order(2)
     @DisplayName("Bird Wild Speak Test")
-    public void birdWildSpeakest()
-    {
+    public void birdWildSpeakest() {
         // Arrange & Act
         actualBird = new Bird(AnimalType.WILD, Skin.FEATHERS, Gender.MALE, Breed.CARDINAL,
                 new BigDecimal("200.0"), 4);
@@ -148,8 +138,7 @@ public class BirdTests {
     @Test
     @Order(2)
     @DisplayName("Bird Default Speak Test")
-    public void birdDefaultSpeakest()
-    {
+    public void birdDefaultSpeakest() {
         // Arrange & Act
         actualBird = new Bird(AnimalType.UNKNOWN, Skin.FEATHERS, Gender.MALE, Breed.CARDINAL,
                 new BigDecimal("200.0"), 4);
@@ -163,8 +152,7 @@ public class BirdTests {
     @Test
     @Order(2)
     @DisplayName("Bird Test Setting Number of Legs")
-    public void birdTestSetNumberLegs()
-    {
+    public void birdTestSetNumberLegs() {
         // Arrange
         actualBird = new Bird(AnimalType.UNKNOWN, Skin.FEATHERS, Gender.MALE, Breed.CARDINAL,
                 new BigDecimal("200.0"), 4);
