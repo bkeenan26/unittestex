@@ -4,6 +4,7 @@ import animals.AnimalType;
 import animals.petstore.pet.attributes.Breed;
 import animals.petstore.pet.attributes.Gender;
 import animals.petstore.pet.attributes.Skin;
+import animals.petstore.pet.types.Bird;
 import animals.petstore.pet.types.Cat;
 import animals.petstore.pet.types.Dog;
 import animals.petstore.store.DuplicatePetStoreRecordException;
@@ -39,7 +40,7 @@ public class PetStoreTest
     @DisplayName("Inventory Count Test")
     public void validateInventory()
     {
-        assertEquals(5, petStore.getPetsForSale().size(),"Inventory counts are off!");
+        assertEquals(7, petStore.getPetsForSale().size(),"Inventory counts are off!");
     }
 
     @Test
@@ -129,5 +130,39 @@ public class PetStoreTest
     {
         assertTrue(Numbers.isEven(number));
     }
+
+    @Test
+    void testExceptionMessageStoredCorrectly() {
+        String expectedMessage = "Pet not found with id [99]";
+        PetNotFoundSaleException exception = new PetNotFoundSaleException(expectedMessage);
+
+        assertEquals(expectedMessage, exception.getMessage(),
+                "Exception message should match the one passed to constructor");
+    }
+
+    @Test
+    void testExceptionThrownAndCaught() {
+        String expectedMessage = "Pet not found in inventory!";
+        Exception thrown = assertThrows(PetNotFoundSaleException.class, () -> {
+            throw new PetNotFoundSaleException(expectedMessage);
+        });
+
+        assertEquals(expectedMessage, thrown.getMessage(),
+                "Caught exception message should match expected");
+    }
+
+    @Test
+    void testExceptionIsInstanceOfException() {
+        PetNotFoundSaleException exception = new PetNotFoundSaleException("Test");
+        assertTrue(exception instanceof Exception, "PetNotFoundSaleException should extend Exception");
+    }
+
+
+
+
+
+
+
+
 
 }
