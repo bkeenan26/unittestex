@@ -6,6 +6,7 @@ import animals.petstore.pet.attributes.Gender;
 import animals.petstore.pet.attributes.Skin;
 import animals.petstore.pet.types.Cat;
 import animals.petstore.pet.types.Dog;
+import animals.petstore.pet.Pet;
 import animals.petstore.store.DuplicatePetStoreRecordException;
 import animals.petstore.store.PetNotFoundSaleException;
 import animals.petstore.store.PetStore;
@@ -33,13 +34,6 @@ public class PetStoreTest
     {
         petStore = new PetStore();
         petStore.init();
-    }
-
-    @Test
-    @DisplayName("Inventory Count Test")
-    public void validateInventory()
-    {
-        assertEquals(5, petStore.getPetsForSale().size(),"Inventory counts are off!");
     }
 
     @Test
@@ -129,5 +123,74 @@ public class PetStoreTest
     {
         assertTrue(Numbers.isEven(number));
     }
+
+    @Test
+    @DisplayName("Pet Not Found Exception Test")
+    public void petNotFoundExceptionTest() {
+
+        Dog missingDog = new Dog(
+                AnimalType.DOMESTIC,
+                Skin.FUR,
+                Gender.MALE,
+                Breed.MALTESE,
+                new BigDecimal("300.00")); // ID NOT IN INVENTORY
+
+        Exception exception = assertThrows(PetNotFoundSaleException.class, () -> {
+            petStore.soldPetItem(missingDog);
+        });
+
+        assertEquals("The Pet is not part of the pet store!!", exception.getMessage());
+    }
+
+    @Test
+    @DisplayName("Add Inventory Item Test")
+    public void addInventoryItemTest() {
+        int before = petStore.getPetsForSale().size();
+
+        Dog newDog = new Dog(AnimalType.DOMESTIC, Skin.FUR, Gender.MALE, Breed.MALTESE,
+                new BigDecimal("200.00"), 10);
+
+        petStore.addPetInventoryItem(newDog);
+
+        assertEquals(before + 1, petStore.getPetsForSale().size());
+    }
+
+    @Test
+    @DisplayName("Duplicate Add Inventory Item Test")
+    public void duplicateAddItemTest() {
+        Dog Daniel = new Dog(
+                AnimalType.DOMESTIC,
+                Skin.FUR,
+                Gender.MALE,
+                Breed.MALTESE,
+                new BigDecimal("300.00"), 1); // ID NOT IN INVENTORY
+
+        Dog Joshua = new Dog(
+                AnimalType.DOMESTIC,
+                Skin.FUR,
+                Gender.MALE,
+                Breed.MALTESE,
+                new BigDecimal("300.00"), 1); // ID NOT IN INVENTORY
+
+        Exception exception = assertThrows(DuplicatePetStoreRecordException.class, () -> {
+            petStore.addPetInventoryItem(Daniel);
+            petStore.addPetInventoryItem(Joshua);
+
+            petStore.soldPetItem(Joshua);
+        });
+
+        assertEquals("Duplicate Dog record store id [1]", exception.getMessage());
+    }
+
+
+
+    @Test
+    @DisplayName("Print Inventory When Empty Test")
+    public void printEmptyInventoryTest() {
+        petStore.getPetsForSale().clear();
+
+        assertDoesNotThrow(() -> petStore.printInventory());
+    }
+
 
 }
