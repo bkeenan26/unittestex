@@ -8,6 +8,7 @@ import animals.petstore.pet.attributes.PetType;
 import animals.petstore.pet.attributes.Skin;
 import animals.petstore.pet.types.Cat;
 import animals.petstore.pet.types.Dog;
+import animals.petstore.pet.types.Snake;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -44,6 +45,16 @@ public class PetStore
                 new BigDecimal("50.00"), 2));
         this.addPetInventoryItem(new Cat(AnimalType.DOMESTIC, Skin.UNKNOWN, Gender.FEMALE, Breed.SPHYNX,
                 new BigDecimal("100.00"),2));
+
+        // For new Snake class
+        this.addPetInventoryItem(new Snake(AnimalType.DOMESTIC, Skin.SCALES, Gender.MALE, Breed.BURMESE_PYTHON,
+                new BigDecimal("150.00"), 1));
+        this.addPetInventoryItem(new Snake(AnimalType.DOMESTIC, Skin.SCALES, Gender.FEMALE, Breed.BALL_PYTHON,
+                new BigDecimal("275.00"), 2));
+        this.addPetInventoryItem(new Snake(AnimalType.DOMESTIC, Skin.SCALES, Gender.MALE, Breed.CORN,
+                new BigDecimal("315.00"), 3));
+        this.addPetInventoryItem(new Snake(AnimalType.DOMESTIC, Skin.SCALES, Gender.FEMALE, Breed.GRASS,
+                new BigDecimal("70.00"), 4));
 
 
     }
@@ -87,6 +98,10 @@ public class PetStore
             Dog foundDog = this.identifySoldDogFromInventory((Dog) soldPet);
             this.removePetFromInventoryByPetId(PetType.DOG, soldPet.getPetStoreId());
             return foundDog;
+        } else if (soldPet instanceof Snake) {  // Updated to check instance of cat in order to check snakes as well
+            Snake foundSnake = this.identifySoldSnakeFromInventory((Snake) soldPet);
+            this.removePetFromInventoryByPetId(PetType.CAT, soldPet.getPetStoreId());
+            return foundSnake;
         } else {
             Cat foundCat = this.identifySoldCatFromInventory((Cat) soldPet);
             this.removePetFromInventoryByPetId(PetType.CAT, soldPet.getPetStoreId());
@@ -120,12 +135,17 @@ public class PetStore
                                 && (p.getPetStoreId() != petStoreId)))
                         .collect(Collectors.toList());
                 break;
-            default: //remove the dog
+            case DOG: // Added case to remove the dog, so I can default to Snake
                 this.petsForSale = this.petsForSale.stream()
                         .filter(p -> ((p instanceof Dog)
                                 && (p.getPetStoreId() != petStoreId)))
                         .collect(Collectors.toList());
-
+                break;
+            default: // Defaults to remove the snake
+                this.petsForSale = this.petsForSale.stream()
+                        .filter(p -> ((p instanceof Snake)
+                                && (p.getPetStoreId() != petStoreId)))
+                        .collect(Collectors.toList());
                 break;
         }
         this.petsForSale.addAll(otherPets);
@@ -172,6 +192,30 @@ public class PetStore
             throw new DuplicatePetStoreRecordException ("Duplicate Cat record store id [" + soldCat.getPetStoreId() + "]");
         }
     }
+
+    /**
+     * New, Part 2
+     * Identify the snake that was sold from the inventory list
+     * @param soldSnake the {@link Snake} that will be sold
+     * @return the {@link Snake} that was sold
+     * @throws DuplicatePetStoreRecordException if there is duplicate cat record
+     */
+    private Snake identifySoldSnakeFromInventory(Snake soldSnake) throws DuplicatePetStoreRecordException
+    {
+        List<Pet> snakePets = this.petsForSale.stream()
+                .filter(p -> ((p instanceof Snake)
+                        && (p.getPetStoreId() == soldSnake.getPetStoreId())))
+                .collect(Collectors.toList());
+
+        if (snakePets.size()==1)
+        {
+            return (Snake) snakePets.get(0);
+        }
+        else {
+            throw new DuplicatePetStoreRecordException ("Duplicate Snake record store id [" + soldSnake.getPetStoreId() + "]");
+        }
+    }
+
 
     public List<Pet> getPetsForSale()
     {
