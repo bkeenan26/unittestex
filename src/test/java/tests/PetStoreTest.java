@@ -6,6 +6,7 @@ import animals.petstore.pet.attributes.Gender;
 import animals.petstore.pet.attributes.Skin;
 import animals.petstore.pet.types.Cat;
 import animals.petstore.pet.types.Dog;
+import animals.petstore.pet.types.Bird;
 import animals.petstore.store.DuplicatePetStoreRecordException;
 import animals.petstore.store.PetNotFoundSaleException;
 import animals.petstore.store.PetStore;
@@ -23,6 +24,7 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.DynamicContainer.dynamicContainer;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
+
 
 public class PetStoreTest
 {
@@ -90,6 +92,68 @@ public class PetStoreTest
         assertEquals(inventorySize, petStore.getPetsForSale().size(), "Expected inventory does not match actual");
         assertEquals(sphynx.getPetStoreId(), removedItem.getPetStoreId(), "The cat items are identical");
     }
+
+    @Test
+    @DisplayName("Add Pet Inventory Happy Path Test")
+    public void addPetSuccessTest() {
+        int sizeBefore = petStore.getPetsForSale().size();
+
+        Dog beagle = new Dog(AnimalType.DOMESTIC, Skin.FUR, Gender.FEMALE, Breed.BEAGLE,
+                new BigDecimal("300.00"), 50);
+
+        petStore.addPetInventoryItem(beagle);
+
+        assertEquals(sizeBefore + 1, petStore.getPetsForSale().size());
+    }
+
+    @Test
+    @DisplayName("Sold Pet Should Match Returned Pet Test")
+    public void soldPetMatchesReturnedTest() throws Exception {
+        Cat cat = new Cat(AnimalType.DOMESTIC, Skin.UNKNOWN, Gender.FEMALE, Breed.SPHYNX,
+                new BigDecimal("100.00"), 2);
+
+        Cat returned = (Cat) petStore.soldPetItem(cat);
+
+        assertEquals(cat.getPetStoreId(), returned.getPetStoreId());
+    }
+    @Test
+    @DisplayName("Print Inventory When Empty Test")
+    public void printEmptyInventoryTest() {
+        PetStore store = new PetStore(); // new, no init()
+        store.printInventory(); // Just ensure no exceptions
+    }
+    @Test
+    @DisplayName("Init Method Loads 5 Pets")
+    public void initLoadsFivePets() {
+        PetStore store = new PetStore();
+        store.init();
+        assertEquals(5, store.getPetsForSale().size());
+    }
+    @Test
+    @DisplayName("Add and Sell Birds for All Valid Breeds")
+    public void addSellBirdsTest() throws Exception {
+        Breed[] birdBreeds = {
+                Breed.BLUE_JAY, Breed.CARDINAL, Breed.SPARROW, Breed.HAWK,
+                Breed.HUMMING_BIRD, Breed.ROBIN, Breed.BALTIMORE_ORIOLE, Breed.PARROT
+        };
+
+        for (int i = 0; i < birdBreeds.length; i++) {
+            Bird bird = new Bird(
+                    AnimalType.DOMESTIC,
+                    Skin.FEATHERS,
+                    Gender.FEMALE,
+                    birdBreeds[i],
+                    new BigDecimal("200.00"),
+                    100 + i
+            );
+
+            petStore.addPetInventoryItem(bird);
+            Bird soldBird = (Bird) petStore.soldPetItem(bird);
+
+            assertEquals(bird.getPetStoreId(), soldBird.getPetStoreId());
+        }
+    }
+
 
     /**
      * Limitations to test factory as it does not instantiate before all
