@@ -6,6 +6,7 @@ import animals.petstore.pet.attributes.Breed;
 import animals.petstore.pet.attributes.Gender;
 import animals.petstore.pet.attributes.PetType;
 import animals.petstore.pet.attributes.Skin;
+import animals.petstore.pet.types.Bird;
 import animals.petstore.pet.types.Cat;
 import animals.petstore.pet.types.Dog;
 
@@ -19,14 +20,12 @@ import java.util.stream.Collectors;
 public class PetStore
 {
     private List<Pet> petsForSale;
-
     private List<Pet> petsSold;
 
     public PetStore()
     {
         petsForSale = new ArrayList<>();
         petsSold = new ArrayList<>();
-
     }
 
     /**
@@ -44,8 +43,6 @@ public class PetStore
                 new BigDecimal("50.00"), 2));
         this.addPetInventoryItem(new Cat(AnimalType.DOMESTIC, Skin.UNKNOWN, Gender.FEMALE, Breed.SPHYNX,
                 new BigDecimal("100.00"),2));
-
-
     }
 
     /**
@@ -57,13 +54,14 @@ public class PetStore
         this.init();
         this.addPetInventoryItem(addPet);
     }
+
     /**
      * Print the inventory left in the pets for sale list
      */
     public void printInventory()
     {
         Consumer<Pet> action = System.out::println;
-        List sortedPets = this.petsForSale.stream()
+        List<Pet> sortedPets = this.petsForSale.stream()
                 .sorted(Comparator.comparing(Pet::getPetType))
                 .collect(Collectors.toList());
         sortedPets.stream()
@@ -78,7 +76,7 @@ public class PetStore
      * @throws PetNotFoundSaleException if the pet is not in any store
      */
     public Pet soldPetItem(Pet soldPet) throws DuplicatePetStoreRecordException, PetNotFoundSaleException {
-        if (soldPet.getPetStoreId()==0)
+        if (soldPet.getPetStoreId() == 0)
         {
             throw new PetNotFoundSaleException("The Pet is not part of the pet store!!");
         }
@@ -87,12 +85,25 @@ public class PetStore
             Dog foundDog = this.identifySoldDogFromInventory((Dog) soldPet);
             this.removePetFromInventoryByPetId(PetType.DOG, soldPet.getPetStoreId());
             return foundDog;
-        } else {
+        }
+        else if (soldPet instanceof Cat)
+        {
             Cat foundCat = this.identifySoldCatFromInventory((Cat) soldPet);
             this.removePetFromInventoryByPetId(PetType.CAT, soldPet.getPetStoreId());
             return foundCat;
         }
+        else if (soldPet instanceof Bird)
+        {
+            Bird foundBird = this.identifySoldBirdFromInventory((Bird) soldPet);
+            this.removePetFromInventoryByPetId(PetType.BIRD, soldPet.getPetStoreId());
+            return foundBird;
+        }
+        else
+        {
+            throw new PetNotFoundSaleException("Unknown pet type!");
+        }
     }
+
     /**
      * Add item to the inventory list
      * @param pet {@link Pet} to be added to the inventory
@@ -112,20 +123,23 @@ public class PetStore
         List<Pet> otherPets = this.petsForSale.stream()
                 .filter(p -> (p.getPetType() != petType))
                 .collect(Collectors.toList());
+
         switch(petType)
         {
             case CAT:
                 this.petsForSale = this.petsForSale.stream()
-                        .filter(p -> ((p instanceof Cat)
-                                && (p.getPetStoreId() != petStoreId)))
+                        .filter(p -> ((p instanceof Cat) && (p.getPetStoreId() != petStoreId)))
                         .collect(Collectors.toList());
                 break;
-            default: //remove the dog
+            case BIRD:
                 this.petsForSale = this.petsForSale.stream()
-                        .filter(p -> ((p instanceof Dog)
-                                && (p.getPetStoreId() != petStoreId)))
+                        .filter(p -> ((p instanceof Bird) && (p.getPetStoreId() != petStoreId)))
                         .collect(Collectors.toList());
-
+                break;
+            default: // Dog
+                this.petsForSale = this.petsForSale.stream()
+                        .filter(p -> ((p instanceof Dog) && (p.getPetStoreId() != petStoreId)))
+                        .collect(Collectors.toList());
                 break;
         }
         this.petsForSale.addAll(otherPets);
@@ -137,17 +151,17 @@ public class PetStore
      * @return the {@link Dog} that was sold
      * @throws DuplicatePetStoreRecordException if there is duplicate dog record
      */
-    private Dog identifySoldDogFromInventory(Dog soldDog) throws DuplicatePetStoreRecordException, PetNotFoundSaleException {
-        List<Pet> dogPets= this.petsForSale.stream()
-                    .filter(p -> ((p instanceof Dog)
-                            && (p.getPetStoreId() == soldDog.getPetStoreId())))
-                    .collect(Collectors.toList());
-        if (dogPets.size()==1)
+    private Dog identifySoldDogFromInventory(Dog soldDog) throws DuplicatePetStoreRecordException {
+        List<Pet> dogPets = this.petsForSale.stream()
+                .filter(p -> ((p instanceof Dog) && (p.getPetStoreId() == soldDog.getPetStoreId())))
+                .collect(Collectors.toList());
+        if (dogPets.size() == 1)
         {
             return (Dog) dogPets.get(0);
         }
-        else {
-            throw new DuplicatePetStoreRecordException ("Duplicate Dog record store id [" + soldDog.getPetStoreId() + "]");
+        else
+        {
+            throw new DuplicatePetStoreRecordException("Duplicate Dog record store id [" + soldDog.getPetStoreId() + "]");
         }
     }
 
@@ -157,19 +171,37 @@ public class PetStore
      * @return the {@link Cat} that was sold
      * @throws DuplicatePetStoreRecordException if there is duplicate cat record
      */
-    private Cat identifySoldCatFromInventory(Cat soldCat) throws DuplicatePetStoreRecordException
-    {
+    private Cat identifySoldCatFromInventory(Cat soldCat) throws DuplicatePetStoreRecordException {
         List<Pet> catPets = this.petsForSale.stream()
-                .filter(p -> ((p instanceof Cat)
-                        && (p.getPetStoreId() == soldCat.getPetStoreId())))
+                .filter(p -> ((p instanceof Cat) && (p.getPetStoreId() == soldCat.getPetStoreId())))
                 .collect(Collectors.toList());
-
-        if (catPets.size()==1)
+        if (catPets.size() == 1)
         {
             return (Cat) catPets.get(0);
         }
-        else {
-            throw new DuplicatePetStoreRecordException ("Duplicate Cat record store id [" + soldCat.getPetStoreId() + "]");
+        else
+        {
+            throw new DuplicatePetStoreRecordException("Duplicate Cat record store id [" + soldCat.getPetStoreId() + "]");
+        }
+    }
+
+    /**
+     * Identify the bird which was sold from the inventory list
+     * @param soldBird the {@link Bird} that will be sold
+     * @return the {@link Bird} that was sold
+     * @throws DuplicatePetStoreRecordException if there is duplicate bird record
+     */
+    private Bird identifySoldBirdFromInventory(Bird soldBird) throws DuplicatePetStoreRecordException {
+        List<Pet> birdPets = this.petsForSale.stream()
+                .filter(p -> ((p instanceof Bird) && (p.getPetStoreId() == soldBird.getPetStoreId())))
+                .collect(Collectors.toList());
+        if (birdPets.size() == 1)
+        {
+            return (Bird) birdPets.get(0);
+        }
+        else
+        {
+            throw new DuplicatePetStoreRecordException("Duplicate Bird record store id [" + soldBird.getPetStoreId() + "]");
         }
     }
 
@@ -177,5 +209,4 @@ public class PetStore
     {
         return petsForSale;
     }
-
 }
