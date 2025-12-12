@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 public class Snake extends Pet implements PetImpl
 {
     /* Properties */
-    private int numberOfLegs;
+    private int numberOfLegs; //number of legs snake has which is 0
     private Breed breed;
     /**
     //     * Constructor
@@ -25,6 +25,7 @@ public class Snake extends Pet implements PetImpl
     //     * @param breed The type of Snake {@link Breed}
     //     */
 
+    //creating a new snake without price
     public Snake(AnimalType animalType, Skin skinType, Gender gender, Breed breed)
     {
         this(animalType, skinType, gender, breed, new BigDecimal(0));
@@ -38,10 +39,12 @@ public class Snake extends Pet implements PetImpl
      * @param breed The type of Snake {@link Breed}
      * @param cost The cost of the Snake
      */
+    //creating a new snake with price
     public Snake(AnimalType animalType, Skin skinType, Gender gender, Breed breed, BigDecimal cost)
     {
         this(animalType, skinType, gender, breed, cost, 0);
     }
+
 
     /**
      * Constructor
@@ -52,6 +55,7 @@ public class Snake extends Pet implements PetImpl
      * @param cost The cost of the Snake
      * @param petStoreId The pet store id
      */
+    //creating a new snake with price and the store id of where the ped is located
     public Snake(AnimalType animalType, Skin skinType, Gender gender, Breed breed, BigDecimal cost, int petStoreId)
     {
         super(PetType.SNAKE, cost, gender, petStoreId);
@@ -65,6 +69,7 @@ public class Snake extends Pet implements PetImpl
      * Is the Snake allergy friendly determined by skin type
      * @return A message that tells if the Snake is hypoallergenic
      */
+    //snakes are not Hypoallergenic
     public String SnakeHypoallergenic()
     {
         return super.petHypoallergenic(this.skinType).replaceAll("pet", "Snake");
@@ -112,6 +117,10 @@ public class Snake extends Pet implements PetImpl
         return this.breed;
     }
 
+    public String typeOfPet() {
+        return "The type of pet is " + petType + "!";
+    }
+
     public AnimalType getAnimalType() {
         return this.animalType;
     }
@@ -120,8 +129,8 @@ public class Snake extends Pet implements PetImpl
     public String toString()
     {
         return super.toString() +
-                "The dog is " +  super.animalType + "!\n" +
-                "The dogs breed is " + this.getBreed() + "!\n" +
+                "The Snake is " +  super.animalType + "!\n" +
+                "The Snake breed is " + this.getBreed() + "!\n" +
                 this.SnakeHypoallergenic() + "!\n" +
                 this.speak() + "\n" +
                 this.numberOfLegs();
