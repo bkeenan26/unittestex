@@ -25,7 +25,7 @@ public class DogTests {
     public void animalTypeTests()
     {
         assertEquals(AnimalType.DOMESTIC, actualDog.getAnimalType(), "Animal Type Expected[" + AnimalType.DOMESTIC
-            + "] Actual[" + actualDog.getAnimalType() + "]");
+                + "] Actual[" + actualDog.getAnimalType() + "]");
     }
 
     @Test
@@ -63,6 +63,15 @@ public class DogTests {
     }
 
     @Test
+    @Order(1)
+    @DisplayName("Getting Number of Legs Test")
+    public void dogLegsTest()
+    {
+        assertEquals(4, actualDog.getNumberOfLegs(), "Number of Legs Expected[" + 4
+                + "] Actual[" + actualDog.getNumberOfLegs() + "]");
+    }
+
+    @Test
     @Order(2)
     @DisplayName("Dog Breed Test Maltese")
     public void genderDogBreed() {
@@ -76,7 +85,7 @@ public class DogTests {
     public void dogGoesGrrTest()
     {
         actualDog = new Dog(AnimalType.WILD, Skin.UNKNOWN,Gender.UNKNOWN, Breed.UNKNOWN);
-        assertEquals("The dog goes Grr! Grr!", actualDog.speak(), "I was expecting Grr");
+        assertEquals("The dog goes grr! grr!", actualDog.speak(), "I was expecting Grr");
     }
 
     @Test
