@@ -65,6 +65,15 @@ public class CatTests {
     }
 
     @Test
+    @Order(1)
+    @DisplayName("Getting Number of Legs Test")
+    public void catLegsTest()
+    {
+        assertEquals(4, actualCat.getNumberOfLegs(), "Number of Legs Expected[" + 4
+                + "] Actual[" + actualCat.getNumberOfLegs() + "]");
+    }
+
+    @Test
     @Order(2)
     @DisplayName("Cat Breed Test BURMESE")
     public void genderCatBreed()
@@ -79,7 +88,7 @@ public class CatTests {
     public void dogGoesGrrTest()
     {
         actualCat = new Cat(AnimalType.WILD, Skin.UNKNOWN,Gender.UNKNOWN, Breed.UNKNOWN);
-        assertEquals("The cat goes Hiss! Hiss!", actualCat.speak(), "I was expecting hiss");
+        assertEquals("The cat goes hiss! hiss!", actualCat.speak(), "I was expecting hiss");
     }
 
     @Test

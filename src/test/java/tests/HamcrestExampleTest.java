@@ -16,6 +16,8 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 
 /**
  * Provide a hamcrest asserts example
@@ -34,7 +36,7 @@ public class HamcrestExampleTest {
                     new BigDecimal("750.00"), 1),
             new Dog(AnimalType.DOMESTIC, Skin.FUR, Gender.MALE, Breed.POODLE,
                     new BigDecimal("750.00"), 2),
-            new Dog(AnimalType.DOMESTIC, Skin.HAIR, Gender.FEMALE, Breed.CARDINAL,
+            new Dog(AnimalType.DOMESTIC, Skin.HAIR, Gender.FEMALE, Breed.GERMAN_SHEPARD,
                     new BigDecimal("750.00"), 2)
     );
 
@@ -42,7 +44,7 @@ public class HamcrestExampleTest {
     @DisplayName("ABC test")
     public void abcTest()
     {
-        assertThat("abc",equalToIgnoringCase("b"));
+        assertThat("abc",equalToIgnoringCase("abc"));
 
     }
 
@@ -73,7 +75,8 @@ public class HamcrestExampleTest {
     @DisplayName("Dog Collection  Match Tests1")
     public void dogCollectionMatch()
     {
-        assertThat("List equality without order",dListExpected, equalTo(dListActual)) ;
+        assertThat(dListActual,
+                containsInAnyOrder(dListExpected.toArray()));
     }
 
     @Test

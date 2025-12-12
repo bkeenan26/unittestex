@@ -70,19 +70,13 @@ public class Pet extends AbstractPet
     @Override
     public String toString()
     {
-        if(this.getPetStoreId() == 0)
-        {
-            return "The type of pet is " + this.petType + "!\n" +
-                    "The "+ this.petType + " gender is " + this.gender + "!\n" +
-                    "The "+ this.petType + " cost is $" + this.cost + "!\n";
-        }
-        else {
-            return "The type of pet is " + this.petType + "!\n" +
-                    "The "+ this.petType + " pet store id is " + this.petStoreId + "!\n" +
-                    "The "+ this.petType + " gender is " + this.gender + "!\n" +
-                    "The "+ this.petType + " cost is $" + this.cost + "!\n";
-        }
+
+    return "The type of pet is " + this.petType + "!\n" +
+            "The "+ this.petType + " pet store id is " + this.petStoreId + "!\n" +
+            "The "+ this.petType + " gender is " + this.gender + "!\n" +
+            "The "+ this.petType + " cost is $" + this.cost + "!\n";
 
     }
 
 }
+
