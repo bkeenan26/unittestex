@@ -26,6 +26,7 @@ public class SnakeTests {
     @DisplayName("Animal Test Type Tests Domestic")
     public void animalTypeTests()
     {
+        actualSnake = new Snake(AnimalType.DOMESTIC, Skin.SCALES,Gender.FEMALE, Breed.UNKNOWN);
         assertEquals(AnimalType.DOMESTIC, actualSnake.getAnimalType(), "Animal Type Expected[" + AnimalType.DOMESTIC
                 + "] Actual[" + actualSnake.getAnimalType() + "]");
     }
@@ -41,15 +42,16 @@ public class SnakeTests {
     @Test
     @Order(1)
     @DisplayName("Snake Scale is it Hyperallergetic")
-    public void SnakeHyperAllergeticTests()
+    public void SnakeHypoallergenic()
     {
-        assertEquals("The Snake is not hyperallergetic!", actualSnake.SnakeHypoallergenic(),
+        actualSnake = new Snake(AnimalType.WILD, Skin.SCALES,Gender.FEMALE, Breed.UNKNOWN);
+        assertEquals("The Snake is hyperallergetic!", actualSnake.SnakeHypoallergenic(),
                 "The Snake is hyperallergetic!");
     }
 
     @Test
     @Order(1)
-    @DisplayName("Snake has 0 legs Test")
+    @DisplayName("Snake has legs Test")
     public void legTests()
     {
         Assertions.assertNotNull(actualSnake.getNumberOfLegs());
@@ -60,21 +62,29 @@ public class SnakeTests {
     @DisplayName("Snake Gender Test FeMale")
     public void genderTestFeMale()
     {
-        actualSnake = new Snake(AnimalType.WILD, Skin.UNKNOWN,Gender.FEMALE, Breed.UNKNOWN);
+        actualSnake = new Snake(AnimalType.WILD, Skin.SCALES,Gender.FEMALE, Breed.UNKNOWN);
         assertEquals(Gender.FEMALE, actualSnake.getGender(), "Expecting Female Gender!");
+    }
+
+    @Test
+    @Order(1)
+    @DisplayName("Getting Number of Legs Test")
+    public void dogLegsTest()
+    {
+        assertEquals(0, actualSnake.getNumberOfLegs(), "Number of Legs Expected[" + 4
+                + "] Actual[" + actualSnake.getNumberOfLegs() + "]");
     }
 
     @Test
     @Order(2)
     @DisplayName("Snake Breed Test COPPERHEAD")
-    public void genderSnakeBreed()
+    public void getBreed()
     {
         actualSnake = new Snake(AnimalType.WILD, Skin.UNKNOWN,Gender.FEMALE, Breed.COPPERHEAD);
         assertEquals(Breed.COPPERHEAD, actualSnake.getBreed(), "Expecting COPPERHEAD!");
     }
 
     @Test
-    @Order(2)
     @DisplayName("Snake Speak hsss Tests")
     public void dogGoesGrrTest()
     {
@@ -90,4 +100,7 @@ public class SnakeTests {
         actualSnake = new Snake(AnimalType.UNKNOWN, Skin.UNKNOWN,Gender.UNKNOWN, Breed.UNKNOWN);
         assertEquals("The Snake goes Psss! Psss!", actualSnake.speak(), "I was expecting Psss");
     }
+
+
 }
+
